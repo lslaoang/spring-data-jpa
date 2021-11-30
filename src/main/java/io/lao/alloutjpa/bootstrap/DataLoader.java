@@ -1,4 +1,4 @@
-package bootstrap;
+package io.lao.alloutjpa.bootstrap;
 
 import io.lao.alloutjpa.domain.Aklat;
 import io.lao.alloutjpa.domain.Genre;
