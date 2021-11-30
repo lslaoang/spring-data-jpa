@@ -3,14 +3,18 @@ package io.lao.alloutjpa;
 import io.lao.alloutjpa.domain.Aklat;
 import io.lao.alloutjpa.domain.Genre;
 import io.lao.alloutjpa.repository.BookRepository;
-import org.assertj.core.api.Assert;
+import io.lao.alloutjpa.service.BookService;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 @ComponentScan(basePackages = {"io.lao.alloutjpa.bootstrap"})
 class AllOutJpaApplicationTests {
@@ -18,6 +22,10 @@ class AllOutJpaApplicationTests {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    BookService bookServiceImp;
+
+    @Order(1)
     @Test
     void shouldAddToDB(){
         long countBefore = bookRepository.count();
@@ -27,5 +35,23 @@ class AllOutJpaApplicationTests {
         assertThat(countBefore).isLessThan(countAfter);
     }
 
+    @Order(2)
+    @Test
+    void serviceShouldSaveBook(){
+        long countBefore = bookRepository.count();
+        assertThat(countBefore).isEqualTo(4);
+        bookServiceImp.save(new Aklat(22, "TestBook",Genre.HISTORY));
+        long countAfter = bookRepository.count();
+        assertThat(bookServiceImp.count()).isEqualTo(5);
+        assertThat(countBefore).isLessThan(countAfter);
+
+    }
+
+    @Order(3)
+    @Test
+    void shouldReturnAllAklat(){
+        long bookCount = bookServiceImp.count();
+        assertThat(bookCount).isEqualTo(5);
+    }
 
 }
