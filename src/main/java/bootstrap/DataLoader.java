@@ -15,7 +15,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Aklat book = new Aklat(1,"Percy Jackson", Genre.SCI_FI);
-        bookRepository.save(book);
+        bookRepository.save(new Aklat(1,"Percy Jackson", Genre.SCI_FI));
+        bookRepository.save(new Aklat(2,"The Alchemist", Genre.FICTION));
+        bookRepository.save(new Aklat(3,"Geometry", Genre.EDUCATIONAL));
     }
 }
