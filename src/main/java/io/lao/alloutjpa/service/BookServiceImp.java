@@ -117,56 +117,56 @@ public class BookServiceImp implements BookService {
 
     @Override
     public void deleteAllByIdInBatch(Iterable<Integer> id) {
-
+        bookRepository.deleteAllByIdInBatch(id);
     }
 
     @Override
     public void deleteAllInBatch() {
-
+        bookRepository.deleteAllInBatch();
     }
 
     @Override
-    public Aklat getOne(Integer integer) {
-        return null;
+    public Aklat getOne(Integer id ) {
+        return bookRepository.getOne(id);
     }
 
     @Override
-    public Aklat getById(Integer integer) {
-        return null;
+    public Aklat getById(Integer id) {
+        return bookRepository.getById(id);
     }
 
     @Override
     public <S extends Aklat> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
+        return bookRepository.findOne(example);
     }
 
     @Override
     public <S extends Aklat> List<S> findAll(Example<S> example) {
-        return null;
+        return bookRepository.findAll(example);
     }
 
     @Override
     public <S extends Aklat> List<S> findAll(Example<S> example, Sort sort) {
-        return null;
+        return bookRepository.findAll(example, sort);
     }
 
     @Override
     public <S extends Aklat> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return null;
+        return bookRepository.findAll(example, pageable);
     }
 
     @Override
     public <S extends Aklat> long count(Example<S> example) {
-        return 0;
+        return bookRepository.count(example);
     }
 
     @Override
     public <S extends Aklat> boolean exists(Example<S> example) {
-        return false;
+        return bookRepository.exists(example);
     }
 
     @Override
     public <S extends Aklat, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-        return null;
+        return bookRepository.findBy(example, queryFunction);
     }
 }
