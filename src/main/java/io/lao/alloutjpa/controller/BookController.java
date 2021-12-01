@@ -29,9 +29,10 @@ public class BookController {
     }
 
     @PostMapping(value = "/addBook/{bookId}")
-    public ResponseEntity<Aklat> addBook(@PathVariable("bookId") int bookId){
+    public ResponseEntity<MgaAklat> addBook(@PathVariable("bookId") int bookId){
         bookRepository.save(new Aklat(bookId,"Test Post Book",Genre.THRILLER));
-
-        return new ResponseEntity<>(bookRepository.getById(bookId),HttpStatus.ACCEPTED);
+        MgaAklat listOfBooks = new MgaAklat();
+        listOfBooks.setMgaAklat(bookRepository.findAll());
+        return new ResponseEntity<>(listOfBooks,HttpStatus.ACCEPTED);
     }
 }
