@@ -27,6 +27,6 @@ public class BookController {
 
     @GetMapping(value = "/{bookId}")
     public ResponseEntity<Aklat> getBookById(@PathVariable("bookId") int bookId){
-        return new ResponseEntity<>(bookRepository.getById(bookId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(bookRepository.getById(bookId), HttpStatus.OK);
     }
 }
