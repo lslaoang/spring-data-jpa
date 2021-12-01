@@ -1,6 +1,6 @@
 package io.lao.alloutjpa.service;
 
-import io.lao.alloutjpa.domain.Aklat;
+import io.lao.alloutjpa.dao.Aklat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

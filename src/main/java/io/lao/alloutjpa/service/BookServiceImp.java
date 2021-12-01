@@ -1,6 +1,6 @@
 package io.lao.alloutjpa.service;
 
-import io.lao.alloutjpa.domain.Aklat;
+import io.lao.alloutjpa.dao.Aklat;
 import io.lao.alloutjpa.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

@@ -1,4 +1,4 @@
-package io.lao.alloutjpa.domain;
+package io.lao.alloutjpa.dao;
 
 import lombok.Getter;
 import lombok.Setter;
