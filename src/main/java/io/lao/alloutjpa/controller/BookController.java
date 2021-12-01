@@ -1,18 +1,16 @@
 package io.lao.alloutjpa.controller;
 
 import io.lao.alloutjpa.dao.Aklat;
+import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.dao.MgaAklat;
 import io.lao.alloutjpa.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/books")
+@RequestMapping(value = "/books", method = {RequestMethod.GET,RequestMethod.POST})
 public class BookController {
 
     @Autowired
@@ -28,5 +26,12 @@ public class BookController {
     @GetMapping(value = "/{bookId}")
     public ResponseEntity<Aklat> getBookById(@PathVariable("bookId") int bookId){
         return new ResponseEntity<>(bookRepository.getById(bookId), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addBook/{bookId}")
+    public ResponseEntity<Aklat> addBook(@PathVariable("bookId") int bookId){
+        bookRepository.save(new Aklat(bookId,"Test Post Book",Genre.THRILLER));
+
+        return new ResponseEntity<>(bookRepository.getById(bookId),HttpStatus.ACCEPTED);
     }
 }
