@@ -18,5 +18,6 @@ public class DataLoader implements CommandLineRunner {
         bookRepository.save(new Aklat(1,"Percy Jackson", Genre.SCI_FI));
         bookRepository.save(new Aklat(2,"The Alchemist", Genre.FICTION));
         bookRepository.save(new Aklat(3,"Geometry", Genre.EDUCATIONAL));
+        bookRepository.save(new Aklat(4,"HEKASI", Genre.EDUCATIONAL));
     }
 }
