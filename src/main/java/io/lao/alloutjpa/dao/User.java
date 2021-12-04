@@ -27,6 +27,5 @@ public class User {
 
     @Column(name = "BOOKS")
     @OneToMany
-    @JoinColumn(name = "STUDENT_BOOKS" ,referencedColumnName = "AKLAT")
-    private List<Aklat> aklatList;
+   private List<Aklat> aklatList;
 }

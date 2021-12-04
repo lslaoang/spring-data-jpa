@@ -26,4 +26,7 @@ public class Aklat {
     @Column(name = "GENRE")
     @Enumerated(EnumType.STRING)
     private Genre  genre;
+
+    @ManyToOne
+    private User user;
 }
