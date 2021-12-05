@@ -6,5 +6,6 @@ public enum Department {
     Medicine,
     Science,
     Sports,
-    Literature
+    Literature;
+
 }
