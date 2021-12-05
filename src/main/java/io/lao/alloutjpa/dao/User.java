@@ -21,11 +21,21 @@ public class User {
     @Column
     private String name;
     @Column
-    private String department;
+    private Department department;
     @Column
     private String address;
 
     @Column(name = "BOOKS")
     @OneToMany
    private List<Aklat> aklatList;
+
+    public User(long id, UserType userType, String name, Department department, String address) {
+        this.id = id;
+        this.userType = userType;
+        this.name = name;
+        this.department = department;
+        this.address = address;
+    }
+
+    public User(){}
 }

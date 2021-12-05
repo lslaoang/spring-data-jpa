@@ -2,6 +2,7 @@ package io.lao.alloutjpa;
 
 import io.lao.alloutjpa.dao.Aklat;
 import io.lao.alloutjpa.dao.Genre;
+import io.lao.alloutjpa.dao.User;
 import io.lao.alloutjpa.repository.BookRepository;
 import io.lao.alloutjpa.service.BookService;
 import org.junit.jupiter.api.MethodOrderer;
@@ -24,6 +25,11 @@ class AllOutJpaApplicationTests {
 
     @Autowired
     BookService bookServiceImp;
+
+
+    User testThisUser = new User(1996,null,null,null,null);
+
+
 
     @Order(1)
     @Test

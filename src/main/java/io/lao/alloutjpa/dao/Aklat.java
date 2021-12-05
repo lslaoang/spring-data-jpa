@@ -1,9 +1,7 @@
 package io.lao.alloutjpa.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,8 +9,6 @@ import javax.persistence.*;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "AKLAT")
 public class Aklat {
@@ -29,4 +25,12 @@ public class Aklat {
 
     @ManyToOne
     private User user;
+
+    public Aklat(int id, String name, Genre genre) {
+        this.id = id;
+        this.name = name;
+        this.genre = genre;
+    }
+
+    public Aklat(){}
 }
