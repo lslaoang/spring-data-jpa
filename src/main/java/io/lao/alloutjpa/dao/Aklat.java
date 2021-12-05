@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Aklat {
 
     @Id
+    @Column
     private int id;
 
     @Column(name = "NAME")
