@@ -41,12 +41,31 @@ public class BookController {
         return new ResponseEntity<>(bookViewService.viewBookById(bookId), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/addBook}")
-    public ResponseEntity<?> addBook(@RequestParam(value = "bookId") int bookId,
-                                     @RequestParam(value = "bookName") String bookName,
-                                     @RequestParam(value = "genre") Genre genre){
+    @RequestMapping(value = "/add")
+    public List<BookView> addBookByParameter(@RequestParam(value = "bookId") int bookId,
+                          @RequestParam(value = "bookName") String bookName,
+                          @RequestParam(value = "genre") Genre genre){
+
         bookService.saveBook(new Aklat(bookId,bookName,genre));
         List<BookView> listOfBooks = bookViewService.viewAllBook();
-        return new ResponseEntity<>(listOfBooks,HttpStatus.ACCEPTED);
+        return listOfBooks;
     }
+
+    //TODO: Implement ModelView aspect
+    /*
+    @RequestMapping(value = {"/addbookTest","addbooktest.html"}, method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView returnThis(){
+        return new ModelAndView("addBook.html");
+    }
+
+    @RequestMapping(value = "/addbook")
+    public String addBook(@ModelAttribute("Books")Books books){
+
+       // bookService.convertToBookAndSave(books);
+        // List<BookView> listOfBooks = bookViewService.viewAllBook();
+        return "Success";
+    }
+
+     */
 }

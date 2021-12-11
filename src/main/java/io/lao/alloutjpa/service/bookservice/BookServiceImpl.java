@@ -2,6 +2,7 @@ package io.lao.alloutjpa.service.bookservice;
 
 import com.sun.istack.NotNull;
 import io.lao.alloutjpa.dao.Aklat;
+import io.lao.alloutjpa.model.Books;
 import io.lao.alloutjpa.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,22 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
+    public void convertToBookAndSave(Books books) {
+        LOGGER.info("Converting book to aklat.");
+        bookRepository.save(convertBookToAklat(books));
+        LOGGER.info("Converting and saving done.");
+    }
+
+    @Override
     public long countBook() {
         return bookRepository.count();
+    }
+
+    private Aklat convertBookToAklat(Books book){
+        return new Aklat(
+                book.getId(),
+                book.getName(),
+                book.getGenre()
+        );
     }
 }
