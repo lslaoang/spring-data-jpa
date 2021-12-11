@@ -44,13 +44,27 @@ public class BookController {
     @RequestMapping(value = "/add")
     public List<BookView> addBookByParameter(@RequestParam(value = "bookId") int bookId,
                           @RequestParam(value = "bookName") String bookName,
-                          @RequestParam(value = "genre") Genre genre){
+                          @RequestParam(value = "genre") String genre){  //Change to string for test
 
-        bookService.saveBook(new Aklat(bookId,bookName,genre));
+
+        //create this validation
+        Genre thisGenre = null;
+        try{
+            thisGenre = validateGenre(genre);
+        }catch (IllegalArgumentException e){
+            thisGenre = Genre.EDUCATIONAL;
+            System.out.println("Genre unknown, setting to default genre.");
+        }
+
+
+        bookService.saveBook(new Aklat(bookId,bookName,thisGenre));
         List<BookView> listOfBooks = bookViewService.viewAllBook();
         return listOfBooks;
     }
 
+    public Genre validateGenre(String strGenre){
+        return Genre.valueOf(strGenre);
+    }
     //TODO: Implement ModelView aspect
     /*
     @RequestMapping(value = {"/addbookTest","addbooktest.html"}, method = RequestMethod.GET)
