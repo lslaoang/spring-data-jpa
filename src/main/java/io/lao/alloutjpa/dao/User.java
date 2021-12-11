@@ -28,7 +28,8 @@ public class User {
     @Column
     private String address;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MGA_AKLAT")
     private List<Aklat> aklatList;
 
     public User(long id, UserType userType, String name, Department department, String address) {

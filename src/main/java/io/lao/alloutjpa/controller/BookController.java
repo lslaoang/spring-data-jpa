@@ -4,6 +4,7 @@ import io.lao.alloutjpa.dao.Aklat;
 import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.dao.MgaAklat;
 import io.lao.alloutjpa.repository.BookRepository;
+import io.lao.alloutjpa.view.BookView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,17 @@ public class BookController {
     @GetMapping
     public MgaAklat findAll(){
         MgaAklat mgaAklat = new MgaAklat();
+        BookView bookView = new BookView();
+
+        //make it a service
         mgaAklat.setMgaAklat(bookRepository.findAll());
+
+        mgaAklat.getMgaAklat().forEach(aklat -> {
+            bookView.setId(aklat.getId());
+            bookView.setGenre(aklat.getGenre());
+            bookView.setName(aklat.getName());
+        });
+
         return mgaAklat;
     }
 
