@@ -39,8 +39,8 @@ public class BookController {
     @PostMapping(value = "/addBook/{bookId}")
     public ResponseEntity<?> addBook(@PathVariable("bookId") int bookId){
         bookService.saveBook(new Aklat(bookId,"Test Post Book",Genre.THRILLER));
-        MgaAklat listOfBooks = new MgaAklat();
-        listOfBooks.setMgaAklat(bookService.getAllAklat());
+
+        List<BookView> listOfBooks = new ArrayList<>();
         return new ResponseEntity<>(listOfBooks,HttpStatus.ACCEPTED);
     }
 }
