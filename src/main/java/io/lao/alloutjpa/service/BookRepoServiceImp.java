@@ -15,15 +15,15 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Service
-public class BookServiceImp implements BookService {
+public class BookRepoServiceImp implements BookRepoService {
 
     @Autowired
     BookRepository bookRepository;
 
+    @Override
     public void saveBook(Aklat aklat){
         bookRepository.save(aklat);
     }
-
 
     @Override
     public List<Aklat> findAll() {

@@ -3,9 +3,8 @@ package io.lao.alloutjpa.controller;
 import io.lao.alloutjpa.dao.Aklat;
 import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.dao.MgaAklat;
-import io.lao.alloutjpa.repository.BookRepository;
+import io.lao.alloutjpa.service.bookservice.BookService;
 import io.lao.alloutjpa.view.BookView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +13,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/books", method = {RequestMethod.GET,RequestMethod.POST})
 public class BookController {
 
-    @Autowired
-    BookRepository bookRepository;
+    final BookService bookService;
+
+    public BookController(final BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping
     public MgaAklat findAll(){
         MgaAklat mgaAklat = new MgaAklat();
         BookView bookView = new BookView();
 
-        //make it a service
-        mgaAklat.setMgaAklat(bookRepository.findAll());
+        mgaAklat.setMgaAklat(bookService.getAllAklat());
 
         mgaAklat.getMgaAklat().forEach(aklat -> {
             bookView.setId(aklat.getId());
@@ -36,14 +37,14 @@ public class BookController {
 
     @GetMapping(value = "/{bookId}")
     public ResponseEntity<Aklat> getBookById(@PathVariable("bookId") int bookId){
-        return new ResponseEntity<>(bookRepository.getById(bookId), HttpStatus.OK);
+        return new ResponseEntity<>(bookService.findBookById(bookId), HttpStatus.OK);
     }
 
     @PostMapping(value = "/addBook/{bookId}")
     public ResponseEntity<?> addBook(@PathVariable("bookId") int bookId){
-        bookRepository.save(new Aklat(bookId,"Test Post Book",Genre.THRILLER));
+        bookService.saveBook(new Aklat(bookId,"Test Post Book",Genre.THRILLER));
         MgaAklat listOfBooks = new MgaAklat();
-        listOfBooks.setMgaAklat(bookRepository.findAll());
+        listOfBooks.setMgaAklat(bookService.getAllAklat());
         return new ResponseEntity<>(listOfBooks,HttpStatus.ACCEPTED);
     }
 }
