@@ -1,16 +1,22 @@
 package io.lao.alloutjpa.service.bookservice;
 
+import com.sun.istack.NotNull;
 import io.lao.alloutjpa.dao.Aklat;
 import io.lao.alloutjpa.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
+@Transactional
 @Service
 public class BookServiceImpl implements BookService{
 
-    @Autowired
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookServiceImpl.class);
+
     final BookRepository bookRepository;
 
     public BookServiceImpl(final BookRepository bookRepository) {
@@ -19,17 +25,21 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public List<Aklat> getAllAklat() {
+        LOGGER.info("Retrieving books.");
         return bookRepository.findAll();
     }
 
     @Override
     public Aklat findBookById(Integer id) {
+        LOGGER.info("Retrieving book by ID.");
         return bookRepository.getById(id);
     }
 
     @Override
-    public void saveBook(Aklat aklat) {
+    public void saveBook(@NotNull @Valid final Aklat aklat) {
+        LOGGER.info("Creating book record.");
         bookRepository.save(aklat);
+        LOGGER.info("Book record creation successful");
     }
 
     @Override
