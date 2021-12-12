@@ -48,22 +48,23 @@ public class BookController {
 
 
         //create this validation
-        Genre thisGenre = null;
-        try{
-            thisGenre = validateGenre(genre);
-        }catch (IllegalArgumentException e){
-            thisGenre = Genre.EDUCATIONAL;
-            System.out.println("Genre unknown, setting to default genre.");
-        }
-
+        Genre thisGenre = validateGenre(genre);
 
         bookService.saveBook(new Aklat(bookId,bookName,thisGenre));
         List<BookView> listOfBooks = bookViewService.viewAllBook();
         return listOfBooks;
     }
 
-    public Genre validateGenre(String strGenre){
-        return Genre.valueOf(strGenre);
+    private static Genre validateGenre(String strGenre){
+        Genre thisGenre = null;
+        try{
+            thisGenre = Genre.valueOf(strGenre);
+            return thisGenre;
+        }catch (IllegalArgumentException e){
+            thisGenre = Genre.UNDEFINED;
+            System.out.println("Genre unknown, setting to default genre.");
+            return thisGenre;
+        }
     }
     //TODO: Implement ModelView aspect
     /*
