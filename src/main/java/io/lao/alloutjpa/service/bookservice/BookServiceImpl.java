@@ -1,65 +1,45 @@
 package io.lao.alloutjpa.service.bookservice;
 
-import com.sun.istack.NotNull;
-import io.lao.alloutjpa.dao.JpaBook;
 import io.lao.alloutjpa.model.Book;
-import io.lao.alloutjpa.repository.BookRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.lao.alloutjpa.service.bookreposervice.BookRepoService;
+import io.lao.alloutjpa.service.converter.BookConverter;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
 @Service
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookServiceImpl.class);
+    final BookRepoService bookRepoService;
+    final BookConverter bookConverter;
 
-    final BookRepository bookRepository;
-
-    public BookServiceImpl(final BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookServiceImpl(final BookRepoService bookRepoService, final BookConverter bookConverter) {
+        this.bookRepoService = bookRepoService;
+        this.bookConverter = bookConverter;
     }
 
     @Override
-    public List<JpaBook> getAllAklat() {
-        LOGGER.info("Retrieving books.");
-        return bookRepository.findAll();
+    public List<Book> getAllBooks() {
+        List<Book> bookList = new ArrayList<>();
+        bookRepoService.getAllAklat().forEach(jpaBook -> {
+            bookList.add(bookConverter.jpaBookToBook(jpaBook));
+        });
+        return bookList;
     }
 
     @Override
-    public JpaBook findBookById(Integer id) {
-        LOGGER.info("Retrieving book by ID.");
-        return bookRepository.getById(id);
+    public Book findBookById(Integer id) {
+        return bookConverter.jpaBookToBook(bookRepoService.findBookById(id));
     }
 
     @Override
-    public void saveBook(@NotNull @Valid final JpaBook jpaBook) {
-        LOGGER.info("Creating book record.");
-        bookRepository.save(jpaBook);
-        LOGGER.info("Book record creation successful");
-    }
-
-    @Override
-    public void convertToAklatAndSave(@NotNull Book book) {
-        LOGGER.info("Converting book to aklat.");
-        bookRepository.save(convertBookToAklat(book));
-        LOGGER.info("Converting and saving done.");
+    public void saveBook(Book book) {
+        bookRepoService.saveBook(bookConverter.bookToJpaBook(book));
     }
 
     @Override
     public long countBook() {
-        return bookRepository.count();
-    }
-
-    private JpaBook convertBookToAklat(Book book){
-        return new JpaBook(
-                book.getId(),
-                book.getName(),
-                book.getGenre()
-        );
+        return bookRepoService.countBook();
     }
 }
