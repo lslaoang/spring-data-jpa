@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "AKLAT")
+@Table(name = "BOOK")
 public class JpaBook {
 
     @Id
