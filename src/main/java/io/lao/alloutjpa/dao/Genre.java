@@ -7,5 +7,6 @@ public enum Genre {
     THRILLER,
     ROMANCE,
     HISTORY,
-    EDUCATIONAL
+    EDUCATIONAL,
+    UNDEFINED //Default
 }
