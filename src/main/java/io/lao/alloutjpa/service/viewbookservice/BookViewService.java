@@ -9,4 +9,6 @@ public interface BookViewService {
     BookView viewBookById(Integer id);
 
     List<BookView> viewAllBook();
+
+    void saveBookView(BookView bookView);
 }

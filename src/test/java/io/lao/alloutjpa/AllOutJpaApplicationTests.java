@@ -4,7 +4,7 @@ import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.dao.JpaBook;
 import io.lao.alloutjpa.dao.User;
 import io.lao.alloutjpa.repository.BookRepository;
-import io.lao.alloutjpa.service.bookservice.BookService;
+import io.lao.alloutjpa.service.bookreposervice.BookRepoService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class AllOutJpaApplicationTests {
     BookRepository bookRepository;
 
     @Autowired
-    BookService bookService;
+    BookRepoService bookRepoService;
 
 
     User testThisUser = new User(1996,null,null,null,null);
@@ -46,9 +46,9 @@ class AllOutJpaApplicationTests {
     void serviceShouldSaveBook(){
         long countBefore = bookRepository.count();
         assertThat(countBefore).isEqualTo(4);
-        bookService.saveBook(new JpaBook(22, "TestBook",Genre.HISTORY));
+        bookRepoService.saveBook(new JpaBook(22, "TestBook",Genre.HISTORY));
         long countAfter = bookRepository.count();
-        assertThat(bookService.countBook()).isEqualTo(5);
+        assertThat(bookRepoService.countBook()).isEqualTo(5);
         assertThat(countBefore).isLessThan(countAfter);
 
     }
@@ -56,7 +56,7 @@ class AllOutJpaApplicationTests {
     @Order(3)
     @Test
     void shouldReturnAllAklat(){
-        long bookCount = bookService.countBook();
+        long bookCount = bookRepoService.countBook();
         assertThat(bookCount).isEqualTo(5);
     }
 

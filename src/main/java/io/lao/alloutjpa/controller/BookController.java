@@ -1,11 +1,8 @@
 package io.lao.alloutjpa.controller;
 
 import io.lao.alloutjpa.dao.Genre;
-import io.lao.alloutjpa.model.Book;
-import io.lao.alloutjpa.service.bookservice.BookService;
 import io.lao.alloutjpa.service.viewbookservice.BookViewService;
 import io.lao.alloutjpa.view.BookView;
-import io.lao.alloutjpa.view.converter.ViewConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,14 +19,10 @@ public class BookController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
 
-    final BookService bookService;
     final BookViewService bookViewService;
-    final ViewConverter viewConverter;
 
-    public BookController(BookService bookService, BookViewService bookViewService, ViewConverter viewConverter) {
-        this.bookService = bookService;
+    public BookController(final BookViewService bookViewService) {
         this.bookViewService = bookViewService;
-        this.viewConverter = viewConverter;
     }
 
     @GetMapping
@@ -64,7 +57,7 @@ public class BookController {
                           @RequestParam(value = "genre") @Valid Genre genre){
 
         try{
-            bookService.convertToAklatAndSave(new Book(bookId,bookName,genre));
+            bookViewService.saveBookView(new BookView(bookId,bookName,genre));
             LOGGER.info("Adding new book success.");
         } catch (MethodArgumentTypeMismatchException | NullPointerException e){
             LOGGER.warn("Argument mismatch or invalid book detected.");
@@ -76,9 +69,8 @@ public class BookController {
 
     @PostMapping(value = "/add/v2")
     public ResponseEntity<?> addBookByObject(@RequestBody BookView bookview){
-        Book book = viewConverter.viewToBook(bookview);
         try{
-            bookService.convertToAklatAndSave(book);
+            bookViewService.saveBookView(bookview);
             LOGGER.info("Adding new book success.");
          } catch (MethodArgumentTypeMismatchException | NullPointerException e){
             LOGGER.warn("Argument mismatch or invalid book detected.");
