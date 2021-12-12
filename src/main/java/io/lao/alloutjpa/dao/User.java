@@ -30,7 +30,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "MGA_AKLAT")
-    private List<Aklat> aklatList;
+    private List<JpaBook> jpaBookList;
 
     public User(long id, UserType userType, String name, Department department, String address) {
         this.id = id;

@@ -1,7 +1,7 @@
 package io.lao.alloutjpa;
 
-import io.lao.alloutjpa.dao.Aklat;
 import io.lao.alloutjpa.dao.Genre;
+import io.lao.alloutjpa.dao.JpaBook;
 import io.lao.alloutjpa.dao.User;
 import io.lao.alloutjpa.repository.BookRepository;
 import io.lao.alloutjpa.service.bookservice.BookService;
@@ -36,7 +36,7 @@ class AllOutJpaApplicationTests {
     void shouldAddToDB(){
         long countBefore = bookRepository.count();
         assertThat(countBefore).isEqualTo(3);
-        bookRepository.save(new Aklat(11,"To Kill a mocking bird", Genre.SCI_FI));
+        bookRepository.save(new JpaBook(11,"To Kill a mocking bird", Genre.SCI_FI));
         long countAfter = bookRepository.count();
         assertThat(countBefore).isLessThan(countAfter);
     }
@@ -46,7 +46,7 @@ class AllOutJpaApplicationTests {
     void serviceShouldSaveBook(){
         long countBefore = bookRepository.count();
         assertThat(countBefore).isEqualTo(4);
-        bookService.saveBook(new Aklat(22, "TestBook",Genre.HISTORY));
+        bookService.saveBook(new JpaBook(22, "TestBook",Genre.HISTORY));
         long countAfter = bookRepository.count();
         assertThat(bookService.countBook()).isEqualTo(5);
         assertThat(countBefore).isLessThan(countAfter);

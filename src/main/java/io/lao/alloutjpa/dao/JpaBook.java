@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "AKLAT")
-public class Aklat {
+public class JpaBook {
 
     @Id
     @Column
@@ -27,11 +27,11 @@ public class Aklat {
     @ManyToOne
     private User user;
 
-    public Aklat(int id, String name, Genre genre) {
+    public JpaBook(int id, String name, Genre genre) {
         this.id = id;
         this.name = name;
         this.genre = genre;
     }
 
-    public Aklat(){}
+    public JpaBook(){}
 }

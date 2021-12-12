@@ -1,7 +1,7 @@
 package io.lao.alloutjpa.service.bookservice;
 
 import com.sun.istack.NotNull;
-import io.lao.alloutjpa.dao.Aklat;
+import io.lao.alloutjpa.dao.JpaBook;
 import io.lao.alloutjpa.model.Books;
 import io.lao.alloutjpa.repository.BookRepository;
 import org.slf4j.Logger;
@@ -25,38 +25,38 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public List<Aklat> getAllAklat() {
+    public List<JpaBook> getAllAklat() {
         LOGGER.info("Retrieving books.");
         return bookRepository.findAll();
     }
 
     @Override
-    public Aklat findBookById(Integer id) {
+    public JpaBook findBookById(Integer id) {
         LOGGER.info("Retrieving book by ID.");
         return bookRepository.getById(id);
     }
 
     @Override
-    public void saveBook(@NotNull @Valid final Aklat aklat) {
+    public void saveBook(@NotNull @Valid final JpaBook jpaBook) {
         LOGGER.info("Creating book record.");
-        bookRepository.save(aklat);
+        bookRepository.save(jpaBook);
         LOGGER.info("Book record creation successful");
     }
 
     @Override
-    public void convertToAklatAndSave(Books books) {
-
+    public void convertToAklatAndSave(@NotNull Books book) {
         LOGGER.info("Converting book to aklat.");
-        bookRepository.save(convertBookToAklat(books));
+        bookRepository.save(convertBookToAklat(book));
         LOGGER.info("Converting and saving done.");
     }
+
     @Override
     public long countBook() {
         return bookRepository.count();
     }
 
-    private Aklat convertBookToAklat(Books book){
-        return new Aklat(
+    private JpaBook convertBookToAklat(Books book){
+        return new JpaBook(
                 book.getId(),
                 book.getName(),
                 book.getGenre()

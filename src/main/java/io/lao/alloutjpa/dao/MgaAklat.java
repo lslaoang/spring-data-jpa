@@ -8,5 +8,5 @@ import java.util.List;
 @Getter
 @Setter
 public class MgaAklat {
-    private List<Aklat> mgaAklat;
+    private List<JpaBook> mgaJpaBook;
 }

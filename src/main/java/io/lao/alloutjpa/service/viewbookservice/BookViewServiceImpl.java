@@ -1,6 +1,6 @@
 package io.lao.alloutjpa.service.viewbookservice;
 
-import io.lao.alloutjpa.dao.Aklat;
+import io.lao.alloutjpa.dao.JpaBook;
 import io.lao.alloutjpa.service.bookservice.BookService;
 import io.lao.alloutjpa.view.BookView;
 import org.slf4j.Logger;
@@ -35,11 +35,11 @@ public class BookViewServiceImpl implements  BookViewService{
         return bookViewList;
     }
 
-    private BookView convertAklatToBookView(Aklat aklat){
+    private BookView convertAklatToBookView(JpaBook jpaBook){
         return new BookView(
-                aklat.getId(),
-                aklat.getName(),
-                aklat.getGenre()
+                jpaBook.getId(),
+                jpaBook.getName(),
+                jpaBook.getGenre()
         );
     }
 }
