@@ -1,7 +1,7 @@
 package io.lao.alloutjpa.service.bookservice;
 
 import io.lao.alloutjpa.dao.JpaBook;
-import io.lao.alloutjpa.model.Books;
+import io.lao.alloutjpa.model.Book;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface BookService {
 
     void saveBook(JpaBook jpaBook);
 
-    void convertToAklatAndSave(Books books);
+    void convertToAklatAndSave(Book book);
 
     long countBook();
 

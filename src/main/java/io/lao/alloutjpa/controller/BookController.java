@@ -1,7 +1,7 @@
 package io.lao.alloutjpa.controller;
 
 import io.lao.alloutjpa.dao.Genre;
-import io.lao.alloutjpa.model.Books;
+import io.lao.alloutjpa.model.Book;
 import io.lao.alloutjpa.service.bookservice.BookService;
 import io.lao.alloutjpa.service.viewbookservice.BookViewService;
 import io.lao.alloutjpa.view.BookView;
@@ -61,7 +61,7 @@ public class BookController {
                           @RequestParam(value = "genre") @Valid Genre genre){
 
         try{
-            bookService.convertToAklatAndSave(new Books(bookId,bookName,genre));
+            bookService.convertToAklatAndSave(new Book(bookId,bookName,genre));
             LOGGER.info("Adding new book success.");
         } catch (MethodArgumentTypeMismatchException | NullPointerException e){
             LOGGER.warn("Argument mismatch or invalid book detected.");
@@ -72,10 +72,10 @@ public class BookController {
 
 
     @PostMapping(value = "/add/v2")
-    public ResponseEntity<?> addBookByObject(@RequestBody Books books){
+    public ResponseEntity<?> addBookByObject(@RequestBody Book book){
 
         try{
-            bookService.convertToAklatAndSave(books);
+            bookService.convertToAklatAndSave(book);
             LOGGER.info("Adding new book success.");
          } catch (MethodArgumentTypeMismatchException | NullPointerException e){
             LOGGER.warn("Argument mismatch or invalid book detected.");
