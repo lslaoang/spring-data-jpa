@@ -42,7 +42,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/{bookId}")
-    public ResponseEntity<?> getBookById(@PathVariable("bookId") int bookId){
+    public ResponseEntity<?> getBookById(@PathVariable("bookId")  @Valid int bookId){
 
         BookView bookView;
         try{
@@ -83,6 +83,4 @@ public class BookController {
          }
         return new ResponseEntity<>("Saving new book record success!",HttpStatus.ACCEPTED);
     }
-
-    //TODO: Implement ModelView aspect
 }
