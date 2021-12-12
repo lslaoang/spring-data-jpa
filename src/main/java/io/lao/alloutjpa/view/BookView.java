@@ -1,10 +1,7 @@
 package io.lao.alloutjpa.view;
 
 import io.lao.alloutjpa.dao.Genre;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class BookView {
 
+    @NonNull
     private int id;
     private String name;
     private Genre genre;
