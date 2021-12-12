@@ -26,7 +26,7 @@ public class BookConverterImpl implements BookConverter {
 
     @Override
     public JpaBook bookToJpaBook(Book book) {
-        LOGGER.info("Converting Book to JpaBookV success!");
+        LOGGER.info("Converting Book to JpaBook success!");
         return  new JpaBook(book.getId(), book.getName(),book.getGenre());
     }
 
