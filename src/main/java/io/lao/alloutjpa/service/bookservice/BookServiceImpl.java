@@ -44,12 +44,12 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public void convertToBookAndSave(Books books) {
+    public void convertToAklatAndSave(Books books) {
+
         LOGGER.info("Converting book to aklat.");
         bookRepository.save(convertBookToAklat(books));
         LOGGER.info("Converting and saving done.");
     }
-
     @Override
     public long countBook() {
         return bookRepository.count();

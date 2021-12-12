@@ -15,7 +15,7 @@ public interface BookService {
 
     void saveBook(Aklat aklat);
 
-    void convertToBookAndSave(Books books);
+    void convertToAklatAndSave(Books books);
 
     long countBook();
 
