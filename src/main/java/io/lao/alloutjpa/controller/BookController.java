@@ -5,7 +5,7 @@ import io.lao.alloutjpa.model.Book;
 import io.lao.alloutjpa.service.bookservice.BookService;
 import io.lao.alloutjpa.service.viewbookservice.BookViewService;
 import io.lao.alloutjpa.view.BookView;
-import io.lao.alloutjpa.view.converter.ViewToDomain;
+import io.lao.alloutjpa.view.converter.ViewConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,12 +24,12 @@ public class BookController {
 
     final BookService bookService;
     final BookViewService bookViewService;
-    final ViewToDomain viewToDomain;
+    final ViewConverter viewConverter;
 
-    public BookController(BookService bookService, BookViewService bookViewService, ViewToDomain viewToDomain) {
+    public BookController(BookService bookService, BookViewService bookViewService, ViewConverter viewConverter) {
         this.bookService = bookService;
         this.bookViewService = bookViewService;
-        this.viewToDomain = viewToDomain;
+        this.viewConverter = viewConverter;
     }
 
     @GetMapping
@@ -76,7 +76,7 @@ public class BookController {
 
     @PostMapping(value = "/add/v2")
     public ResponseEntity<?> addBookByObject(@RequestBody BookView bookview){
-        Book book = viewToDomain.viewToBook(bookview);
+        Book book = viewConverter.viewToBook(bookview);
         try{
             bookService.convertToAklatAndSave(book);
             LOGGER.info("Adding new book success.");
