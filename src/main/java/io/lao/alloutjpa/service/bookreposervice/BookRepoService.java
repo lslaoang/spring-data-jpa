@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface BookRepoService {
 
-    List<JpaBook> getAllAklat();
+    List<JpaBook> getAllBooks();
 
     JpaBook findBookById(Integer id);
 

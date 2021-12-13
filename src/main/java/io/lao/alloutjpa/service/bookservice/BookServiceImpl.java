@@ -22,7 +22,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getAllBooks() {
         List<Book> bookList = new ArrayList<>();
-        bookRepoService.getAllAklat().forEach(jpaBook -> {
+        bookRepoService.getAllBooks().forEach(jpaBook -> {
             bookList.add(bookConverter.jpaBookToBook(jpaBook));
         });
         return bookList;

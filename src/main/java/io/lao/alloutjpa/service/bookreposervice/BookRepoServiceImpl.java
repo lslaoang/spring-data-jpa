@@ -23,7 +23,7 @@ public class BookRepoServiceImpl implements BookRepoService {
     }
 
     @Override
-    public List<JpaBook> getAllAklat() {
+    public List<JpaBook> getAllBooks() {
         LOGGER.info("Retrieving books.");
         return bookRepository.findAll();
     }
