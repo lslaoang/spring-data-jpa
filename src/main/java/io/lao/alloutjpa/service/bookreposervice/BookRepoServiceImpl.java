@@ -2,7 +2,6 @@ package io.lao.alloutjpa.service.bookreposervice;
 
 import com.sun.istack.NotNull;
 import io.lao.alloutjpa.dao.JpaBook;
-import io.lao.alloutjpa.model.Book;
 import io.lao.alloutjpa.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,22 +42,8 @@ public class BookRepoServiceImpl implements BookRepoService {
     }
 
     @Override
-    public void convertToJpaBookAndSave(@NotNull Book book) {
-        LOGGER.info("Converting book to aklat.");
-        bookRepository.save(convertBookToAklat(book));
-        LOGGER.info("Converting and saving done.");
-    }
-
-    @Override
     public long countBook() {
         return bookRepository.count();
     }
 
-    private JpaBook convertBookToAklat(Book book){
-        return new JpaBook(
-                book.getId(),
-                book.getName(),
-                book.getGenre()
-        );
-    }
 }
