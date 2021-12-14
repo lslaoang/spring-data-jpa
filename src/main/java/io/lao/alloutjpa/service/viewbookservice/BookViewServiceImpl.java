@@ -5,12 +5,14 @@ import io.lao.alloutjpa.service.converter.BookConverter;
 import io.lao.alloutjpa.view.BookView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Qualifier("bookViewService")
 public class BookViewServiceImpl implements  BookViewService{
     
     private static final Logger LOGGER = LoggerFactory.getLogger(BookViewServiceImpl.class);
