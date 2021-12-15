@@ -1,6 +1,7 @@
 package io.lao.alloutjpa.dao;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,7 +11,8 @@ import java.util.List;
 @Table(name = "STUDENT")
 @Getter
 @Setter
-public class User {
+@NoArgsConstructor
+public class JpaStudent {
     @Id
     @Column
     private long id;
@@ -28,17 +30,15 @@ public class User {
     @Column
     private String address;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MGA_AKLAT")
+    @OneToMany(mappedBy = "jpaStudent")
     private List<JpaBook> jpaBookList;
 
-    public User(long id, UserType userType, String name, Department department, String address) {
+
+    public JpaStudent(long id, UserType userType, String name, Department department, String address) {
         this.id = id;
         this.userType = userType;
         this.name = name;
         this.department = department;
         this.address = address;
     }
-
-    public User(){}
 }

@@ -1,8 +1,6 @@
 package io.lao.alloutjpa;
 
-import io.lao.alloutjpa.dao.Genre;
-import io.lao.alloutjpa.dao.JpaBook;
-import io.lao.alloutjpa.dao.User;
+import io.lao.alloutjpa.dao.JpaStudent;
 import io.lao.alloutjpa.repository.BookRepository;
 import io.lao.alloutjpa.service.bookreposervice.BookRepoService;
 import org.junit.jupiter.api.MethodOrderer;
@@ -27,16 +25,14 @@ class AllOutJpaApplicationTests {
     BookRepoService bookRepoService;
 
 
-    User testThisUser = new User(1996,null,null,null,null);
-
-
+    JpaStudent testThisJpaStudent = new JpaStudent(1996,null,null,null,null);
 
     @Order(1)
     @Test
     void shouldAddToDB(){
         long countBefore = bookRepository.count();
         assertThat(countBefore).isEqualTo(3);
-        bookRepository.save(new JpaBook(11,"To Kill a mocking bird", Genre.SCI_FI));
+      //  bookRepository.save(new JpaBook(11,"To Kill a mocking bird", Genre.SCI_FI));
         long countAfter = bookRepository.count();
         assertThat(countBefore).isLessThan(countAfter);
     }
@@ -46,7 +42,7 @@ class AllOutJpaApplicationTests {
     void serviceShouldSaveBook(){
         long countBefore = bookRepository.count();
         assertThat(countBefore).isEqualTo(4);
-        bookRepoService.saveBook(new JpaBook(22, "TestBook",Genre.HISTORY));
+       // bookRepoService.saveBook(new JpaBook(22, "TestBook",Genre.HISTORY));
         long countAfter = bookRepository.count();
         assertThat(bookRepoService.countBook()).isEqualTo(5);
         assertThat(countBefore).isLessThan(countAfter);
