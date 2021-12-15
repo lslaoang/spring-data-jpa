@@ -2,7 +2,6 @@ package io.lao.alloutjpa.service.viewbookservice;
 
 import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.model.Book;
-import io.lao.alloutjpa.service.bookservice.BookService;
 import io.lao.alloutjpa.service.converter.BookConverter;
 import io.lao.alloutjpa.view.BookView;
 import org.junit.Test;
@@ -20,9 +19,6 @@ public class BookViewServiceTest {
 
     @Mock
     private BookConverter bookConverter;
-
-    @Mock
-    private BookService bookService;
 
     @InjectMocks
     private BookViewServiceImpl bookViewService;
