@@ -15,13 +15,13 @@ public class BookConverterImpl implements BookConverter {
     @Override
     public Book viewToBook(BookView bookView) {
         LOGGER.info("Converting BookView to domain success!");
-        return  new Book(bookView.getId(), bookView.getName(),bookView.getGenre());
+        return new Book(bookView.getId(), bookView.getName(), bookView.getGenre());
     }
 
     @Override
     public BookView bookToView(Book book) {
         LOGGER.info("Converting Book to BookView success!");
-        return  new BookView(book.getId(), book.getName(),book.getGenre());
+        return new BookView(book.getId(), book.getName(), book.getGenre());
     }
 
     @Override
@@ -31,12 +31,12 @@ public class BookConverterImpl implements BookConverter {
         jpaBook.setName(book.getName());
         jpaBook.setGenre(book.getGenre());
         jpaBook.setId(book.getId());
-        return  jpaBook;
+        return jpaBook;
     }
 
     @Override
     public Book jpaBookToBook(JpaBook jpaBook) {
         LOGGER.info("Converting JpaBook to Book success!");
-        return  new Book(jpaBook.getId(), jpaBook.getName(),jpaBook.getGenre());
+        return new Book(jpaBook.getId(), jpaBook.getName(), jpaBook.getGenre());
     }
 }

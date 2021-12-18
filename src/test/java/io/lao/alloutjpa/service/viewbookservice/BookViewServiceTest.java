@@ -23,16 +23,16 @@ public class BookViewServiceTest {
     @InjectMocks
     private BookViewServiceImpl bookViewService;
 
-    Book getDefaultBook(){
-        return new Book(101,"ThisBook", Genre.THRILLER);
+    Book getDefaultBook() {
+        return new Book(101, "ThisBook", Genre.THRILLER);
     }
 
-    BookView getDefaultBookView(){
-        return new BookView(101,"ThisBook", Genre.THRILLER);
+    BookView getDefaultBookView() {
+        return new BookView(101, "ThisBook", Genre.THRILLER);
     }
 
     @Test
-    public void shouldReturnBookView(){
+    public void shouldReturnBookView() {
         Book book = getDefaultBook();
         BookView bookview = getDefaultBookView();
         when(bookViewService.viewBookById(any())).thenReturn(bookview);
@@ -41,14 +41,14 @@ public class BookViewServiceTest {
     }
 
     @Test
-    public void shouldConvertViewToBookToView(){
+    public void shouldConvertViewToBookToView() {
         BookView bookView = getDefaultBookView();
         Book book = getDefaultBook();
         when(bookConverter.viewToBook(any())).thenReturn(book);
         when(bookConverter.bookToView(any())).thenReturn(bookView);
 
         Book book1 = bookConverter.viewToBook(bookView);
-        BookView bookView1 =bookConverter.bookToView(book);
+        BookView bookView1 = bookConverter.bookToView(book);
 
         assertThat(book1.getId()).isEqualTo(book.getId());
         assertThat(bookView1.getGenre()).isEqualTo(book.getGenre());

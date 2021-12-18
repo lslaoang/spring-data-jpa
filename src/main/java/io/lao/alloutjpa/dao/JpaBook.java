@@ -23,10 +23,10 @@ public class JpaBook {
 
     @Column()
     @Enumerated(EnumType.STRING)
-    private Genre  genre;
+    private Genre genre;
 
     @ManyToOne()
-    @JoinColumn( name = "student_id")
+    @JoinColumn(name = "student_id")
     private JpaStudent jpaStudent;
 
     public JpaBook(int id, String name, Genre genre, JpaStudent jpaStudent) {

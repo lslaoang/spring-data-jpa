@@ -29,7 +29,7 @@ public class JpaStudent {
     @Column
     private String address;
 
-    @OneToMany(cascade = CascadeType.ALL ,fetch = FetchType.EAGER, mappedBy = "jpaStudent")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "jpaStudent")
     private List<JpaBook> jpaBookList;
 
 

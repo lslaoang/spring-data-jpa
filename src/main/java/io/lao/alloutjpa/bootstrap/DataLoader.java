@@ -28,11 +28,10 @@ public class DataLoader implements CommandLineRunner {
         student.setAddress("Makati");
         studentRepository.save(student);
 
-        bookRepository.save(new JpaBook(1,"Percy Jackson", Genre.SCI_FI,student));
-        bookRepository.save(new JpaBook(2,"The Alchemist", Genre.FICTION,student));
-        bookRepository.save(new JpaBook(3,"Geometry", Genre.EDUCATIONAL,student));
-        bookRepository.save(new JpaBook(4,"HEKASI", Genre.EDUCATIONAL,student));
-
+        bookRepository.save(new JpaBook(1, "Percy Jackson", Genre.SCI_FI, student));
+        bookRepository.save(new JpaBook(2, "The Alchemist", Genre.FICTION, student));
+        bookRepository.save(new JpaBook(3, "Geometry", Genre.EDUCATIONAL, student));
+        bookRepository.save(new JpaBook(4, "HEKASI", Genre.EDUCATIONAL, student));
 
 
         JpaBook jpaBook = new JpaBook();
