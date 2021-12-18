@@ -1,12 +1,12 @@
 package io.lao.alloutjpa;
 
+import io.lao.alloutjpa.dao.Genre;
+import io.lao.alloutjpa.dao.JpaBook;
 import io.lao.alloutjpa.dao.JpaStudent;
 import io.lao.alloutjpa.repository.BookRepository;
+import io.lao.alloutjpa.repository.StudentRepository;
 import io.lao.alloutjpa.service.bookreposervice.BookRepoService;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,36 +24,52 @@ class AllOutJpaApplicationTests {
     @Autowired
     BookRepoService bookRepoService;
 
+    @Autowired
+    StudentRepository studentRepository;
 
-    JpaStudent testThisJpaStudent = new JpaStudent(1996,null,null,null,null);
+    long countBefore = 0;
+
+    private JpaStudent testThisJpaStudent = testThisJpaStudent = new JpaStudent(1996, null, null, null, null);
+
+    @BeforeEach
+    public void initDb() {
+        studentRepository.save(testThisJpaStudent);
+        countBefore = studentRepository.count();
+    }
+
+    @Test
+    public void shouldAddToDb() {
+        assertThat(countBefore).isGreaterThan(0);
+    }
 
     @Order(1)
     @Test
-    void shouldAddToDB(){
+    void shouldAddToDB() {
         long countBefore = bookRepository.count();
-        assertThat(countBefore).isEqualTo(3);
-      //  bookRepository.save(new JpaBook(11,"To Kill a mocking bird", Genre.SCI_FI));
+        bookRepository.save(new JpaBook(11, "To Kill a mocking bird", Genre.SCI_FI, testThisJpaStudent));
         long countAfter = bookRepository.count();
         assertThat(countBefore).isLessThan(countAfter);
     }
 
     @Order(2)
     @Test
-    void serviceShouldSaveBook(){
+    void serviceShouldSaveBook() {
         long countBefore = bookRepository.count();
-        assertThat(countBefore).isEqualTo(4);
-       // bookRepoService.saveBook(new JpaBook(22, "TestBook",Genre.HISTORY));
+        bookRepoService.saveBook(new JpaBook(22, "TestBook", Genre.HISTORY, testThisJpaStudent));
         long countAfter = bookRepository.count();
-        assertThat(bookRepoService.countBook()).isEqualTo(5);
+        assertThat(bookRepoService.countBook()).isEqualTo(countBefore + 1);
         assertThat(countBefore).isLessThan(countAfter);
 
     }
 
     @Order(3)
     @Test
-    void shouldReturnAllAklat(){
+    void shouldReturnAllAklat() {
         long bookCount = bookRepoService.countBook();
-        assertThat(bookCount).isEqualTo(5);
+        assertThat(bookCount).isEqualTo(7);
     }
+
+
+
 
 }

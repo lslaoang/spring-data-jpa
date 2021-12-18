@@ -7,14 +7,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "STUDENT")
+@Entity(name = "STUDENT")
 @Getter
 @Setter
 @NoArgsConstructor
 public class JpaStudent {
+
     @Id
-    @Column
     private long id;
 
     @Column
@@ -30,7 +29,7 @@ public class JpaStudent {
     @Column
     private String address;
 
-    @OneToMany(mappedBy = "jpaStudent")
+    @OneToMany(cascade = CascadeType.ALL ,fetch = FetchType.EAGER, mappedBy = "jpaStudent")
     private List<JpaBook> jpaBookList;
 
 

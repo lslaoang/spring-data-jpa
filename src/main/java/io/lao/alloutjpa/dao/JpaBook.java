@@ -16,18 +16,17 @@ import javax.persistence.*;
 public class JpaBook {
 
     @Id
-    @Column
     private int id;
 
-    @Column(name = "NAME")
+    @Column()
     private String name;
 
-    @Column(name = "GENRE")
+    @Column()
     @Enumerated(EnumType.STRING)
     private Genre  genre;
 
-    @ManyToOne
-    @JoinColumn(name = "student", nullable = false)
+    @ManyToOne()
+    @JoinColumn( name = "student_id")
     private JpaStudent jpaStudent;
 
     public JpaBook(int id, String name, Genre genre, JpaStudent jpaStudent) {
