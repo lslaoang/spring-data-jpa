@@ -23,7 +23,7 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         JpaStudent student = new JpaStudent();
-        student.setId(322);
+        student.setId("322");
         student.setName("Lao");
         student.setAddress("Makati");
         studentRepository.save(student);
