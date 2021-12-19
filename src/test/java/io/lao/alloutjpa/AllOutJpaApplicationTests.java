@@ -29,7 +29,7 @@ class AllOutJpaApplicationTests {
 
     long countBefore = 0;
 
-    private JpaStudent testThisJpaStudent = testThisJpaStudent = new JpaStudent(1996, null, null, null, null);
+    private JpaStudent testThisJpaStudent = testThisJpaStudent = new JpaStudent("1996", null, null, null, null);
 
     @BeforeEach
     public void initDb() {
@@ -46,7 +46,7 @@ class AllOutJpaApplicationTests {
     @Test
     void shouldAddToDB() {
         long countBefore = bookRepository.count();
-        bookRepository.save(new JpaBook(11, "To Kill a mocking bird", Genre.SCI_FI, testThisJpaStudent));
+        bookRepository.save(new JpaBook("11", "To Kill a mocking bird", Genre.SCI_FI, testThisJpaStudent));
         long countAfter = bookRepository.count();
         assertThat(countBefore).isLessThan(countAfter);
     }
@@ -55,7 +55,7 @@ class AllOutJpaApplicationTests {
     @Test
     void serviceShouldSaveBook() {
         long countBefore = bookRepository.count();
-        bookRepoService.saveBook(new JpaBook(22, "TestBook", Genre.HISTORY, testThisJpaStudent));
+        bookRepoService.saveBook(new JpaBook("22", "TestBook", Genre.HISTORY, testThisJpaStudent));
         long countAfter = bookRepository.count();
         assertThat(bookRepoService.countBook()).isEqualTo(countBefore + 1);
         assertThat(countBefore).isLessThan(countAfter);

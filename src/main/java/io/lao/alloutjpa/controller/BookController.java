@@ -38,7 +38,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/{bookId}")
-    public ResponseEntity<?> getBookById(@PathVariable("bookId")  @Valid int bookId){
+    public ResponseEntity<?> getBookById(@PathVariable("bookId")  @Valid String bookId){
 
         BookView bookView;
         try{
@@ -52,7 +52,7 @@ public class BookController {
     }
 
     @PostMapping(value = "/add")
-    public ResponseEntity<?>  addBookByParameter(@RequestParam(value = "bookId") @Valid int bookId,
+    public ResponseEntity<?>  addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
                           @RequestParam(value = "bookName") String bookName,
                           @RequestParam(value = "genre") @Valid Genre genre){
 
