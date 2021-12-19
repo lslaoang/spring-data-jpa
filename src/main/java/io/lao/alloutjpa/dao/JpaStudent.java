@@ -14,7 +14,7 @@ import java.util.List;
 public class JpaStudent {
 
     @Id
-    private long id;
+    private String id;
 
     @Column
     private UserType userType;
@@ -33,7 +33,7 @@ public class JpaStudent {
     private List<JpaBook> jpaBookList;
 
 
-    public JpaStudent(long id, UserType userType, String name, Department department, String address) {
+    public JpaStudent(String id, UserType userType, String name, Department department, String address) {
         this.id = id;
         this.userType = userType;
         this.name = name;

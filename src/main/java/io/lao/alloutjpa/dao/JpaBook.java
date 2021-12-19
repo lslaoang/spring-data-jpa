@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class JpaBook {
 
     @Id
-    private int id;
+    private String id;
 
     @Column()
     private String name;
@@ -29,7 +29,7 @@ public class JpaBook {
     @JoinColumn(name = "student_id")
     private JpaStudent jpaStudent;
 
-    public JpaBook(int id, String name, Genre genre, JpaStudent jpaStudent) {
+    public JpaBook(String id, String name, Genre genre, JpaStudent jpaStudent) {
         this.id = id;
         this.name = name;
         this.genre = genre;
