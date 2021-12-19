@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/books", method = {RequestMethod.GET,RequestMethod.POST})
+@RequestMapping(value = "/books", method = {RequestMethod.GET, RequestMethod.POST})
 public class BookController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
@@ -26,56 +26,53 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<?> viewAllBook(){
-        List<BookView> bookViewList;
-        try{
-            bookViewList =   bookViewService.viewAllBook();
-        }catch (NullPointerException e){
+    public ResponseEntity<?> viewAllBook() {
+        final List<BookView> bookViewList = bookViewService.viewAllBook();
+        if (!bookViewList.isEmpty()) {
+            return new ResponseEntity<>(bookViewList, HttpStatus.OK);
+        } else {
             LOGGER.warn("No record detected.");
-            return  new ResponseEntity<>("Something went wrong",HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No record found in the book repository.", HttpStatus.NO_CONTENT);
         }
-        return  new ResponseEntity<>(bookViewList,HttpStatus.OK);
     }
 
     @GetMapping(value = "/{bookId}")
-    public ResponseEntity<?> getBookById(@PathVariable("bookId")  @Valid String bookId){
+    public ResponseEntity<?> getBookById(@PathVariable("bookId") @Valid String bookId) {
 
-        BookView bookView;
-        try{
-            bookView = bookViewService.viewBookById(bookId);
-        } catch (NullPointerException e){
-            LOGGER.warn("No record of {} detected.",bookId);
-            return new ResponseEntity<>("No record found.",HttpStatus.NO_CONTENT);
+        BookView bookView = bookViewService.viewBookById(bookId);
+        if (bookView != null) {
+            LOGGER.info("Fetching record of {} success.", bookId);
+            return new ResponseEntity<>(bookView, HttpStatus.OK);
+        } else {
+            LOGGER.warn("No record of {} detected.", bookId);
+            return new ResponseEntity<>("No record found.", HttpStatus.NO_CONTENT);
         }
-        LOGGER.info("Fetching record of {} success.",bookId);
-        return new ResponseEntity<>(bookView, HttpStatus.OK);
     }
 
     @PostMapping(value = "/add")
-    public ResponseEntity<?>  addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
-                          @RequestParam(value = "bookName") String bookName,
-                          @RequestParam(value = "genre") @Valid Genre genre){
+    public ResponseEntity<?> addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
+                                                @RequestParam(value = "bookName") String bookName,
+                                                @RequestParam(value = "genre") @Valid Genre genre) {
 
-        try{
-            bookViewService.saveBookView(new BookView(bookId,bookName,genre));
+        try {
+            bookViewService.saveBookView(new BookView(bookId, bookName, genre));
             LOGGER.info("Adding new book success.");
-        } catch (MethodArgumentTypeMismatchException | NullPointerException e){
+        } catch (MethodArgumentTypeMismatchException | NullPointerException e) {
             LOGGER.warn("Argument mismatch or invalid book detected.");
-            return new ResponseEntity<>("Something went wrong.",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Something went wrong.", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Saving new book record success!",HttpStatus.OK);
+        return new ResponseEntity<>("Saving new book record success!", HttpStatus.OK);
     }
 
 
     @PostMapping(value = "/add/v2")
-    public ResponseEntity<?> addBookByObject(@RequestBody BookView bookview){
-        try{
+    public ResponseEntity<?> addBookByObject(@RequestBody @Valid BookView bookview) {
+        if (bookview != null) {
             bookViewService.saveBookView(bookview);
-            LOGGER.info("Adding new book success.");
-         } catch (MethodArgumentTypeMismatchException | NullPointerException e){
-            LOGGER.warn("Argument mismatch or invalid book detected.");
-            return new ResponseEntity<>("Something went wrong.",HttpStatus.BAD_REQUEST);
-         }
-        return new ResponseEntity<>("Saving new book record success!",HttpStatus.ACCEPTED);
+            LOGGER.info("Adding new book with ID {} success.", bookview.getId());
+            return new ResponseEntity<>("Book with Saving new book record success!", HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>("Something went wrong.", HttpStatus.BAD_REQUEST);
+        }
     }
 }

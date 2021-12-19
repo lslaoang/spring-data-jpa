@@ -13,8 +13,8 @@ import java.util.List;
 
 @Service
 @Qualifier("bookViewService")
-public class BookViewServiceImpl implements  BookViewService{
-    
+public class BookViewServiceImpl implements BookViewService {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(BookViewServiceImpl.class);
     final BookService bookService;
     final BookConverter bookConverter;
@@ -27,7 +27,12 @@ public class BookViewServiceImpl implements  BookViewService{
     @Override
     public BookView viewBookById(String id) {
         LOGGER.info("Retrieving book by ID");
-       return bookConverter.bookToView(bookService.findBookById(id));
+        BookView bookView = bookConverter.bookToView(bookService.findBookById(id));
+        if (bookView != null) {
+            return bookConverter.bookToView(bookService.findBookById(id));
+        } else
+            return null;
+
     }
 
     @Override

@@ -20,8 +20,11 @@ public class BookConverterImpl implements BookConverter {
 
     @Override
     public BookView bookToView(Book book) {
-        LOGGER.info("Converting Book to BookView success!");
-        return new BookView(book.getId(), book.getName(), book.getGenre());
+        if (book != null) {
+            LOGGER.info("Converting Book to BookView success!");
+            return new BookView(book.getId(), book.getName(), book.getGenre());
+        } else
+            return null;
     }
 
     @Override
@@ -36,7 +39,10 @@ public class BookConverterImpl implements BookConverter {
 
     @Override
     public Book jpaBookToBook(JpaBook jpaBook) {
-        LOGGER.info("Converting JpaBook to Book success!");
-        return new Book(jpaBook.getId(), jpaBook.getName(), jpaBook.getGenre());
+        if (jpaBook != null) {
+            LOGGER.info("Converting JpaBook to Book success!");
+            return new Book(jpaBook.getId(), jpaBook.getName(), jpaBook.getGenre());
+        } else
+            return null;
     }
 }
