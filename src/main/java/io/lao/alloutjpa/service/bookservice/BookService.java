@@ -7,7 +7,7 @@ import java.util.List;
 public interface BookService {
     List<Book> getAllBooks();
 
-    Book findBookById(Integer id);
+    Book findBookById(String id);
 
     void saveBook(Book book);
 

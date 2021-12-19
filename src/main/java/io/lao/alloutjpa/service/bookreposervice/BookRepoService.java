@@ -10,7 +10,7 @@ public interface BookRepoService {
 
     List<JpaBook> getAllBooks();
 
-    JpaBook findBookById(Integer id);
+    JpaBook findBookById(String  id);
 
     void saveBook(JpaBook jpaBook);
 

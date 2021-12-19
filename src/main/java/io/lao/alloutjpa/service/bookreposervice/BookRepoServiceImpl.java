@@ -29,7 +29,7 @@ public class BookRepoServiceImpl implements BookRepoService {
     }
 
     @Override
-    public JpaBook findBookById(Integer id) {
+    public JpaBook findBookById(String id) {
         LOGGER.info("Retrieving book by ID.");
         return bookRepository.getById(id);
     }
