@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BookViewService {
 
-    BookView viewBookById(Integer id);
+    BookView viewBookById(String id);
 
     List<BookView> viewAllBook();
 

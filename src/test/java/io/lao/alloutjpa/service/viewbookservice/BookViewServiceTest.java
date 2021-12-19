@@ -24,11 +24,11 @@ public class BookViewServiceTest {
     private BookViewServiceImpl bookViewService;
 
     Book getDefaultBook() {
-        return new Book(101, "ThisBook", Genre.THRILLER);
+        return new Book("101", "ThisBook", Genre.THRILLER);
     }
 
     BookView getDefaultBookView() {
-        return new BookView(101, "ThisBook", Genre.THRILLER);
+        return new BookView("101", "ThisBook", Genre.THRILLER);
     }
 
     @Test

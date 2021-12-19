@@ -25,7 +25,7 @@ public class BookViewServiceImpl implements  BookViewService{
     }
 
     @Override
-    public BookView viewBookById(Integer id) {
+    public BookView viewBookById(String id) {
         LOGGER.info("Retrieving book by ID");
        return bookConverter.bookToView(bookService.findBookById(id));
     }
