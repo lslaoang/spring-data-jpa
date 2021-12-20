@@ -26,6 +26,11 @@ public class BookController implements ErrorController {
         this.bookViewService = bookViewService;
     }
 
+    @GetMapping
+    public String defaultLandingPage(){
+        return "index";
+    }
+
     @GetMapping(value = {"/books","/books.html"})
     public ResponseEntity<?> viewAllBook() {
         final List<BookView> bookViewList = bookViewService.viewAllBook();
