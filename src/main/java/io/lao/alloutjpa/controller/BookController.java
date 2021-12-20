@@ -5,6 +5,7 @@ import io.lao.alloutjpa.service.viewbookservice.BookViewService;
 import io.lao.alloutjpa.view.BookView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/books", method = {RequestMethod.GET, RequestMethod.POST})
-public class BookController {
+public class BookController implements ErrorController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
 

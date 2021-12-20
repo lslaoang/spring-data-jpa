@@ -32,7 +32,6 @@ public class BookViewServiceImpl implements BookViewService {
             return bookConverter.bookToView(bookService.findBookById(id));
         } else
             return null;
-
     }
 
     @Override
