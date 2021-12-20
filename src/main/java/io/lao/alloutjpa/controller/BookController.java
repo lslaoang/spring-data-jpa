@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/books", method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 public class BookController implements ErrorController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
@@ -26,7 +26,7 @@ public class BookController implements ErrorController {
         this.bookViewService = bookViewService;
     }
 
-    @GetMapping
+    @GetMapping(value = {"/books","/books.html"})
     public ResponseEntity<?> viewAllBook() {
         final List<BookView> bookViewList = bookViewService.viewAllBook();
         if (!bookViewList.isEmpty()) {
@@ -37,7 +37,7 @@ public class BookController implements ErrorController {
         }
     }
 
-    @GetMapping(value = "/{bookId}")
+    @GetMapping(value = "/book/{bookId}")
     public ResponseEntity<?> getBookById(@PathVariable("bookId") @Valid String bookId) {
 
         BookView bookView = bookViewService.viewBookById(bookId);
@@ -50,7 +50,7 @@ public class BookController implements ErrorController {
         }
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "book/add")
     public ResponseEntity<?> addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
                                                 @RequestParam(value = "bookName") String bookName,
                                                 @RequestParam(value = "genre") @Valid Genre genre) {
@@ -66,7 +66,7 @@ public class BookController implements ErrorController {
     }
 
 
-    @PostMapping(value = "/add/v2")
+    @PostMapping(value = "book/add/v1")
     public ResponseEntity<?> addBookByObject(@RequestBody @Valid BookView bookview) {
         if (bookview != null) {
             bookViewService.saveBookView(bookview);
