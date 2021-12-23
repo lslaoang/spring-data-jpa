@@ -67,7 +67,7 @@ public class BookController implements ErrorController {
             LOGGER.warn("Argument mismatch or invalid book detected.");
             return new ResponseEntity<>("Something went wrong.", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("Saving new book record success!", HttpStatus.OK);
+        return new ResponseEntity<>("Saving new book record success!", HttpStatus.CREATED);
     }
 
 
@@ -76,7 +76,7 @@ public class BookController implements ErrorController {
         if (bookview != null) {
             bookViewService.saveBookView(bookview);
             LOGGER.info("Adding new book with ID {} success.", bookview.getId());
-            return new ResponseEntity<>("Book with Saving new book record success!", HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("Book added successfully!", HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Something went wrong.", HttpStatus.BAD_REQUEST);
         }
