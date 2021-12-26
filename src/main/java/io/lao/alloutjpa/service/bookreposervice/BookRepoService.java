@@ -14,6 +14,8 @@ public interface BookRepoService {
 
     void saveBook(JpaBook jpaBook);
 
+    void updateBook(JpaBook jpaBook);
+
     long countBook();
 
 }

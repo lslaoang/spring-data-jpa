@@ -1,6 +1,8 @@
 package io.lao.alloutjpa.service.bookreposervice;
 
 import com.sun.istack.NotNull;
+import io.lao.alloutjpa.controller.exception.BookAlreadyExistsException;
+import io.lao.alloutjpa.controller.exception.BookNotFoundException;
 import io.lao.alloutjpa.dao.JpaBook;
 import io.lao.alloutjpa.repository.BookRepository;
 import org.slf4j.Logger;
@@ -30,7 +32,7 @@ public class BookRepoServiceImpl implements BookRepoService {
     }
 
     @Override
-    public JpaBook findBookById(String id) {
+    public JpaBook findBookById(String id){
         Optional<JpaBook> book = bookRepository.findById(id);;
         if(book.isPresent()){
             LOGGER.info("Retrieving book by ID.");
@@ -42,15 +44,20 @@ public class BookRepoServiceImpl implements BookRepoService {
     }
 
     @Override
-    public void saveBook(@NotNull @Valid final JpaBook jpaBook) {
-
-        if (bookRepository.findById(jpaBook.getId()).isPresent()) {
-            LOGGER.info("Updating book record with {} ID.", jpaBook.getId());
-        } else {
-            LOGGER.info("Creating new book record.");
+    public void saveBook(@NotNull @Valid final JpaBook jpaBook) throws BookAlreadyExistsException {
+        if(bookRepository.findById(jpaBook.getId()).isPresent()){
+            throw new BookAlreadyExistsException("Book already with "+jpaBook.getId()+ " ID already exist. Consider updating record. ");
         }
         bookRepository.save(jpaBook);
-        LOGGER.info("Book record update/create successful!");
+        LOGGER.info("Book record create successful!");
+    }
+
+    public void updateBook(final JpaBook jpaBook) throws BookNotFoundException{
+        if(bookRepository.findById(jpaBook.getId()).isPresent()){
+            bookRepository.save(jpaBook);
+            LOGGER.info("Book record update for " +jpaBook.getId() +" book successful!");
+        }else
+            throw new BookNotFoundException("Cannot find book with ID: " +jpaBook.getId());
     }
 
     @Override

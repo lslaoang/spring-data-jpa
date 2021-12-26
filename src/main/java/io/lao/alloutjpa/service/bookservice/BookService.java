@@ -11,5 +11,7 @@ public interface BookService {
 
     void saveBook(Book book);
 
+    void updateBook(Book book);
+
     long countBook();
 }

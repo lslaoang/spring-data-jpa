@@ -11,4 +11,6 @@ public interface BookViewService {
     List<BookView> viewAllBook();
 
     void saveBookView(BookView bookView);
+
+    void updateBookView(BookView bookView);
 }

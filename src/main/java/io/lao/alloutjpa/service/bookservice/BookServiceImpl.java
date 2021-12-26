@@ -39,6 +39,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public void updateBook(Book book) {
+        bookRepoService.updateBook(bookConverter.bookToJpaBook(book));
+    }
+
+    @Override
     public long countBook() {
         return bookRepoService.countBook();
     }

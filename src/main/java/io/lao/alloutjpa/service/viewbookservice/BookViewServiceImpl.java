@@ -50,4 +50,9 @@ public class BookViewServiceImpl implements BookViewService {
         bookService.saveBook(bookConverter.viewToBook(bookView));
     }
 
+    @Override
+    public void updateBookView(BookView bookView) {
+        bookService.updateBook(bookConverter.viewToBook(bookView));
+    }
+
 }
