@@ -1,5 +1,7 @@
 package io.lao.alloutjpa.controller;
 
+import io.lao.alloutjpa.controller.exception.BookAlreadyExistsException;
+import io.lao.alloutjpa.controller.exception.BookNotFoundException;
 import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.service.viewbookservice.BookViewService;
 import io.lao.alloutjpa.view.BookView;
@@ -9,7 +11,6 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,23 +28,23 @@ public class BookController implements ErrorController {
     }
 
     @GetMapping
-    public String defaultLandingPage(){
+    public String defaultLandingPage() {
         return "index";
     }
 
-    @GetMapping(value = {"/books","/books.html"})
-    public ResponseEntity<?> viewAllBook() {
+    @GetMapping(value = {"/books", "/books.html"})
+    public ResponseEntity<?> viewAllBook() throws BookNotFoundException {
         final List<BookView> bookViewList = bookViewService.viewAllBook();
         if (!bookViewList.isEmpty()) {
             return new ResponseEntity<>(bookViewList, HttpStatus.OK);
         } else {
             LOGGER.warn("No record detected.");
-            return new ResponseEntity<>("No record found in the book repository.", HttpStatus.NO_CONTENT);
+            throw new BookNotFoundException("No record found in the book repository. ");
         }
     }
 
     @GetMapping(value = "/book/{bookId}")
-    public ResponseEntity<?> getBookById(@PathVariable("bookId") @Valid String bookId) {
+    public ResponseEntity<?> getBookById(@PathVariable("bookId") @Valid String bookId) throws BookNotFoundException {
 
         BookView bookView = bookViewService.viewBookById(bookId);
         if (bookView != null) {
@@ -51,28 +52,34 @@ public class BookController implements ErrorController {
             return new ResponseEntity<>(bookView, HttpStatus.OK);
         } else {
             LOGGER.warn("No record of {} detected.", bookId);
-            return new ResponseEntity<>("No record found.", HttpStatus.NO_CONTENT);
+            throw new BookNotFoundException("No record found for " +bookId +".");
         }
     }
 
     @PostMapping(value = "book/add")
     public ResponseEntity<?> addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
                                                 @RequestParam(value = "bookName") String bookName,
-                                                @RequestParam(value = "genre") @Valid Genre genre) {
+                                                @RequestParam(value = "genre") @Valid Genre genre)
+            throws BookAlreadyExistsException {
 
-        try {
-            bookViewService.saveBookView(new BookView(bookId, bookName, genre));
-            LOGGER.info("Adding new book success.");
-        } catch (MethodArgumentTypeMismatchException | NullPointerException e) {
-            LOGGER.warn("Argument mismatch or invalid book detected.");
-            return new ResponseEntity<>("Something went wrong.", HttpStatus.BAD_REQUEST);
-        }
+        bookViewService.saveBookView(new BookView(bookId, bookName, genre));
+        LOGGER.info("Adding new book success.");
         return new ResponseEntity<>("Saving new book record success!", HttpStatus.CREATED);
+    }
+
+    @PatchMapping(value = "book/update")
+    public ResponseEntity<?> updateBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
+                                                   @RequestParam(value = "bookName") String bookName,
+                                                   @RequestParam(value = "genre") @Valid Genre genre)
+            throws BookNotFoundException {
+        bookViewService.updateBookView(new BookView(bookId, bookName, genre));
+        LOGGER.info("Adding new book success.");
+        return new ResponseEntity<>("Successfully updated book wiht ID:" +bookId, HttpStatus.FOUND);
     }
 
 
     @PostMapping(value = "book/add/v1")
-    public ResponseEntity<?> addBookByObject(@RequestBody @Valid BookView bookview) {
+    public ResponseEntity<?> addBookByObject(@RequestBody @Valid BookView bookview) throws BookAlreadyExistsException {
         if (bookview != null) {
             bookViewService.saveBookView(bookview);
             LOGGER.info("Adding new book with ID {} success.", bookview.getId());
