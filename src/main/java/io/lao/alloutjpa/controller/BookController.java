@@ -7,17 +7,19 @@ import io.lao.alloutjpa.service.viewbookservice.BookViewService;
 import io.lao.alloutjpa.view.BookView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
+
+import static io.lao.alloutjpa.dao.Genre.UNDEFINED;
 
 @RestController
-@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-public class BookController implements ErrorController {
+@RequestMapping("/books")
+public class BookController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
 
@@ -32,7 +34,7 @@ public class BookController implements ErrorController {
         return "index";
     }
 
-    @GetMapping(value = {"/books", "/books.html"})
+    @GetMapping("/view-all")
     public ResponseEntity<?> viewAllBook() throws BookNotFoundException {
         final List<BookView> bookViewList = bookViewService.viewAllBook();
         if (!bookViewList.isEmpty()) {
@@ -43,7 +45,7 @@ public class BookController implements ErrorController {
         }
     }
 
-    @GetMapping(value = "/book/{bookId}")
+    @GetMapping(value = "/search/{bookId}")
     public ResponseEntity<?> getBookById(@PathVariable("bookId") @Valid String bookId) throws BookNotFoundException {
 
         BookView bookView = bookViewService.viewBookById(bookId);
@@ -56,29 +58,38 @@ public class BookController implements ErrorController {
         }
     }
 
-    @PostMapping(value = "book/add")
+    @PostMapping(value = "/add/v1")
     public ResponseEntity<?> addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
                                                 @RequestParam(value = "bookName") String bookName,
-                                                @RequestParam(value = "genre") @Valid Genre genre)
+                                                @RequestParam(value = "genre")  String genre)
             throws BookAlreadyExistsException {
 
-        bookViewService.saveBookView(new BookView(bookId, bookName, genre));
+        bookViewService.saveBookView(new BookView(bookId, bookName, translateGenre(genre)));
         LOGGER.info("Adding new book success.");
         return new ResponseEntity<>("Saving new book record success!", HttpStatus.CREATED);
     }
 
-    @PatchMapping(value = "book/update")
+    private Genre translateGenre(String genreStr){
+        try{
+            return Genre.valueOf(genreStr.toUpperCase(Locale.ROOT));
+        } catch (RuntimeException e) {
+            LOGGER.warn("Error occurred getting genre. Setting genre to default.");
+            return UNDEFINED;
+        }
+    }
+
+    @PatchMapping(value = "/update")
     public ResponseEntity<?> updateBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
                                                    @RequestParam(value = "bookName") String bookName,
-                                                   @RequestParam(value = "genre") @Valid Genre genre)
+                                                   @RequestParam(value = "genre") String genre)
             throws BookNotFoundException {
-        bookViewService.updateBookView(new BookView(bookId, bookName, genre));
-        LOGGER.info("Adding new book success.");
-        return new ResponseEntity<>("Successfully updated book wiht ID:" +bookId, HttpStatus.FOUND);
+        bookViewService.updateBookView(new BookView(bookId, bookName, translateGenre(genre)));
+        LOGGER.info("Updating book success.");
+        return new ResponseEntity<>("Successfully updated book with ID: " +bookId, HttpStatus.FOUND);
     }
 
 
-    @PostMapping(value = "book/add/v1")
+    @PostMapping(value = "/add/v2")
     public ResponseEntity<?> addBookByObject(@RequestBody @Valid BookView bookview) throws BookAlreadyExistsException {
         if (bookview != null) {
             bookViewService.saveBookView(bookview);
