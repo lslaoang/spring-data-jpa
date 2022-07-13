@@ -69,15 +69,6 @@ public class BookController {
         return new ResponseEntity<>("Saving new book record success!", HttpStatus.CREATED);
     }
 
-    private Genre translateGenre(String genreStr){
-        try{
-            return Genre.valueOf(genreStr.toUpperCase(Locale.ROOT));
-        } catch (RuntimeException e) {
-            LOGGER.warn("Error occurred getting genre. Setting genre to default.");
-            return UNDEFINED;
-        }
-    }
-
     @PatchMapping(value = "/update")
     public ResponseEntity<?> updateBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
                                                    @RequestParam(value = "bookName") String bookName,
@@ -97,6 +88,15 @@ public class BookController {
             return new ResponseEntity<>("Book added successfully!", HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Something went wrong.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private Genre translateGenre(String genreStr){
+        try{
+            return Genre.valueOf(genreStr.toUpperCase(Locale.ROOT));
+        } catch (RuntimeException e) {
+            LOGGER.warn("Error occurred getting genre. Setting genre to default.");
+            return UNDEFINED;
         }
     }
 }
