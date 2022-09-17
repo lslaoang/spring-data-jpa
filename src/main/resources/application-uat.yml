@@ -8,7 +8,7 @@ spring:
       ddl-auto: create-drop
     show-sql: true
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb #Change to Docker/Container
   security:
     user:
       name: sa
