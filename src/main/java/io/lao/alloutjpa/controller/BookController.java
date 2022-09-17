@@ -96,14 +96,9 @@ public class BookController {
 
     @RequestMapping(value = "/addBookV3", method = RequestMethod.POST)
     public String addBook(@RequestBody Book book){
-
-
-        LOGGER.info("ID = " +book.getId()
-        + "\n NAME = " +book.getName()
-        +"\n GENRE = " +book.getGenre());
-
         try{
             bookViewService.saveBookView(new BookView(book.getId(),book.getName(),book.getGenre()));
+            LOGGER.info("Adding books successful!");
             return "/all-books";
         }catch (Exception e){
             LOGGER.error(e.getMessage());
