@@ -3,6 +3,7 @@ package io.lao.alloutjpa.controller;
 import io.lao.alloutjpa.controller.exception.BookAlreadyExistsException;
 import io.lao.alloutjpa.controller.exception.BookNotFoundException;
 import io.lao.alloutjpa.dao.Genre;
+import io.lao.alloutjpa.model.Book;
 import io.lao.alloutjpa.service.viewbookservice.BookViewService;
 import io.lao.alloutjpa.view.BookView;
 import org.slf4j.Logger;
@@ -90,6 +91,23 @@ public class BookController {
             return new ResponseEntity<>("Book added successfully!", HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Something went wrong.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/addBookV3", method = RequestMethod.POST)
+    public String addBook(@RequestBody Book book){
+
+
+        LOGGER.info("ID = " +book.getId()
+        + "\n NAME = " +book.getName()
+        +"\n GENRE = " +book.getGenre());
+
+        try{
+            bookViewService.saveBookView(new BookView(book.getId(),book.getName(),book.getGenre()));
+            return "/all-books";
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
+            return "/error";
         }
     }
 
