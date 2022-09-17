@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,7 +18,7 @@ import java.util.Locale;
 
 import static io.lao.alloutjpa.dao.Genre.UNDEFINED;
 
-@RestController
+@Controller
 @RequestMapping("/books")
 public class BookController {
 
@@ -31,7 +32,7 @@ public class BookController {
 
     @GetMapping
     public String defaultLandingPage() {
-        return "index";
+        return "addBook";
     }
 
     @GetMapping("/view-all")
@@ -58,6 +59,7 @@ public class BookController {
         }
     }
 
+    @ResponseBody
     @PostMapping(value = "/add/v1")
     public ResponseEntity<?> addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
                                                 @RequestParam(value = "bookName") String bookName,
