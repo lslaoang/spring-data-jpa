@@ -54,5 +54,4 @@ public class BookViewServiceImpl implements BookViewService {
     public void updateBookView(BookView bookView) {
         bookService.updateBook(bookConverter.viewToBook(bookView));
     }
-
 }

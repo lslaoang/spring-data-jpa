@@ -99,11 +99,16 @@ public class BookController {
         try{
             bookViewService.saveBookView(new BookView(book.getId(),book.getName(),book.getGenre()));
             LOGGER.info("Adding books successful!");
-            return "/all-books";
+            return "redirect:view-all-books";
         }catch (Exception e){
             LOGGER.error(e.getMessage());
-            return "/error";
+            return "redirect:error";
         }
+    }
+
+    @RequestMapping(value = "/view-all-books", method = RequestMethod.GET)
+    public String viewAllBooks(){
+        return "all-books";
     }
 
     private Genre translateGenre(String genreStr){
