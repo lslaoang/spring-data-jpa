@@ -1,0 +1,24 @@
+
+spring:
+  h2:
+    console:
+      enabled:  true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  datasource:
+    url: jdbc:h2:mem:testdb #Change to actual DB
+  security:
+    user:
+      name: sa
+  jackson:
+    serialization:
+      indent_output: true
+
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
