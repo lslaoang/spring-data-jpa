@@ -26,32 +26,44 @@ public class BookViewServiceImpl implements BookViewService {
 
     @Override
     public BookView viewBookById(String id) {
-        LOGGER.info("Retrieving book by ID");
-        BookView bookView = bookConverter.bookToView(bookService.findBookById(id));
-        if (bookView != null) {
+        try {
+            LOGGER.info("Retrieving book by ID");
             return bookConverter.bookToView(bookService.findBookById(id));
-        } else
-            return null;
+        } catch (RuntimeException e){
+            throw new BookViewError("Fetching of specific book failed. " + e.getMessage());
+        }
     }
 
     @Override
     public List<BookView> viewAllBook() {
-        LOGGER.info("Retrieving all books started.");
-        List<BookView> bookViewList = new ArrayList<>();
-        bookService.getAllBooks().forEach(book -> {
-            bookViewList.add(bookConverter.bookToView(book));
-        });
-        LOGGER.info("Retrieving all books finished.");
-        return bookViewList;
+        try {
+            LOGGER.info("Retrieving all books started.");
+            List<BookView> bookViewList = new ArrayList<>();
+            bookService.getAllBooks().forEach(book -> {
+                bookViewList.add(bookConverter.bookToView(book));
+            });
+            LOGGER.info("Retrieving all books finished.");
+            return bookViewList;
+        } catch (RuntimeException e){
+            throw new BookViewError("Fetching of books failed. " + e.getMessage());
+        }
     }
 
     @Override
     public void saveBookView(BookView bookView) {
-        bookService.saveBook(bookConverter.viewToBook(bookView));
+        try{
+            bookService.saveBook(bookConverter.viewToBook(bookView));
+        }catch (RuntimeException e){
+            throw new BookViewError("Saving book failed. " + e.getMessage());
+        }
     }
 
     @Override
     public void updateBookView(BookView bookView) {
-        bookService.updateBook(bookConverter.viewToBook(bookView));
+        try {
+            bookService.updateBook(bookConverter.viewToBook(bookView));
+        } catch (RuntimeException e){
+            throw new BookViewError("Conversion of Book to view failed. " + e.getMessage());
+        }
     }
 }

@@ -19,9 +19,8 @@ public class BookConverterImpl implements BookConverter {
             return new Book(bookView.getId(), bookView.getName(), bookView.getGenre());
         }catch (RuntimeException e){
             LOGGER.error("Converting View to Book failed.");
-            throw new BookConversionError(e.getMessage());
+            throw new BookConversionError("Conversion of View to Book failed. " +e.getMessage());
         }
-
     }
 
     @Override
@@ -31,7 +30,7 @@ public class BookConverterImpl implements BookConverter {
             return new BookView(book.getId(), book.getName(), book.getGenre());
         }catch (RuntimeException e){
             LOGGER.error("Converting Book to View failed.");
-            throw new BookConversionError(e.getMessage());
+            throw new BookConversionError("Conversion of Book to View failed. " + e.getMessage());
         }
     }
 
@@ -46,9 +45,8 @@ public class BookConverterImpl implements BookConverter {
             return jpaBook;
         } catch (RuntimeException e) {
             LOGGER.error("Converting Book to JpaBook failed.");
-            throw new BookConversionError(e.getMessage());
+            throw new BookConversionError("Conversion of Book to JpaBook failed. " + e.getMessage());
         }
-
     }
 
     @Override
@@ -58,7 +56,7 @@ public class BookConverterImpl implements BookConverter {
             return new Book(jpaBook.getId(), jpaBook.getName(), jpaBook.getGenre());
         } catch (RuntimeException e) {
             LOGGER.error("Converting JpaBook to Book failed.");
-            throw new BookConversionError(e.getMessage());
+            throw new BookConversionError("Conversion of JpaBook to Book failed. " + e.getMessage());
         }
     }
 }
