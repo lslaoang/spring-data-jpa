@@ -14,47 +14,51 @@ public class BookConverterImpl implements BookConverter {
 
     @Override
     public Book viewToBook(BookView bookView) {
-        if (bookView != null) {
+        try {
             LOGGER.info("Converting BookView to domain success!");
             return new Book(bookView.getId(), bookView.getName(), bookView.getGenre());
-        } else {
-            LOGGER.warn("Converting BookView to domain failed.");
-            return null;
+        }catch (RuntimeException e){
+            LOGGER.error("Converting View to Book failed.");
+            throw new BookConversionError(e.getMessage());
         }
 
     }
 
     @Override
     public BookView bookToView(Book book) {
-        if (book != null) {
+        try {
             LOGGER.info("Converting Book to BookView success!");
             return new BookView(book.getId(), book.getName(), book.getGenre());
-        } else
-            return null;
+        }catch (RuntimeException e){
+            LOGGER.error("Converting Book to View failed.");
+            throw new BookConversionError(e.getMessage());
+        }
     }
 
     @Override
     public JpaBook bookToJpaBook(Book book) {
-        if (book != null) {
+        try {
             JpaBook jpaBook = new JpaBook();
             jpaBook.setName(book.getName());
             jpaBook.setGenre(book.getGenre());
             jpaBook.setId(book.getId());
             LOGGER.info("Converting Book to JpaBook success!");
             return jpaBook;
-        } else {
-            LOGGER.warn("Converting Book to JpaBook failed.");
-            return null;
+        } catch (RuntimeException e) {
+            LOGGER.error("Converting Book to JpaBook failed.");
+            throw new BookConversionError(e.getMessage());
         }
 
     }
 
     @Override
     public Book jpaBookToBook(JpaBook jpaBook) {
-        if (jpaBook != null) {
+        try {
             LOGGER.info("Converting JpaBook to Book success!");
             return new Book(jpaBook.getId(), jpaBook.getName(), jpaBook.getGenre());
-        } else
-            return null;
+        } catch (RuntimeException e) {
+            LOGGER.error("Converting JpaBook to Book failed.");
+            throw new BookConversionError(e.getMessage());
+        }
     }
 }
