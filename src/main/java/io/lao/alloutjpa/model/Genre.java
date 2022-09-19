@@ -1,4 +1,4 @@
-package io.lao.alloutjpa.dao;
+package io.lao.alloutjpa.model;
 
 public enum Genre {
     COMEDY,

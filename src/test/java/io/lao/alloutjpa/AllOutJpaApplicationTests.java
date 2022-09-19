@@ -1,8 +1,8 @@
 package io.lao.alloutjpa;
 
-import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.dao.JpaBook;
 import io.lao.alloutjpa.dao.JpaStudent;
+import io.lao.alloutjpa.model.Genre;
 import io.lao.alloutjpa.repository.BookRepository;
 import io.lao.alloutjpa.repository.StudentRepository;
 import io.lao.alloutjpa.service.bookreposervice.BookRepoService;

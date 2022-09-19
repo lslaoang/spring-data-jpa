@@ -1,6 +1,6 @@
 package io.lao.alloutjpa.view;
 
-import io.lao.alloutjpa.dao.Genre;
+import io.lao.alloutjpa.model.Genre;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

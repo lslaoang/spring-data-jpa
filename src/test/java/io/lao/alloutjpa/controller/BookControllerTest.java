@@ -1,8 +1,8 @@
 package io.lao.alloutjpa.controller;
 
 
-import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.model.Book;
+import io.lao.alloutjpa.model.Genre;
 import io.lao.alloutjpa.view.BookView;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;

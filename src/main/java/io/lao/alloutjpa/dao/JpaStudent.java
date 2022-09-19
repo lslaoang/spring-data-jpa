@@ -1,5 +1,7 @@
 package io.lao.alloutjpa.dao;
 
+import io.lao.alloutjpa.model.Department;
+import io.lao.alloutjpa.model.UserType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

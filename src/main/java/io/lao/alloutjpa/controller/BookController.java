@@ -2,8 +2,8 @@ package io.lao.alloutjpa.controller;
 
 import io.lao.alloutjpa.controller.exception.BookAlreadyExistsException;
 import io.lao.alloutjpa.controller.exception.BookNotFoundException;
-import io.lao.alloutjpa.dao.Genre;
 import io.lao.alloutjpa.model.Book;
+import io.lao.alloutjpa.model.Genre;
 import io.lao.alloutjpa.service.viewbookservice.BookViewError;
 import io.lao.alloutjpa.service.viewbookservice.BookViewService;
 import io.lao.alloutjpa.view.BookView;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Locale;
 
-import static io.lao.alloutjpa.dao.Genre.UNDEFINED;
+import static io.lao.alloutjpa.model.Genre.UNDEFINED;
 
 @Controller
 @RequestMapping("/books")
