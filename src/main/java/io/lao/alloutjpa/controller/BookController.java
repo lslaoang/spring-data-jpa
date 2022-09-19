@@ -33,7 +33,7 @@ public class BookController {
 
     @GetMapping
     public String defaultLandingPage() {
-        return "addBook";
+        return "all-books";
     }
 
     @GetMapping("/view-all")
@@ -60,21 +60,6 @@ public class BookController {
         }
     }
 
-    @ResponseBody
-    @PostMapping(value = "/add/v1")
-    public ResponseEntity<?> addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
-                                                @RequestParam(value = "bookName") String bookName,
-                                                @RequestParam(value = "genre")  String genre)
-                                                throws BookAlreadyExistsException {
-        try {
-            bookViewService.saveBookView(new BookView(bookId, bookName, translateGenre(genre)));
-            LOGGER.info("Adding new book success.");
-            return new ResponseEntity<>("Saving new book record success!", HttpStatus.CREATED);
-        } catch (BookViewError e) {
-            return new ResponseEntity<>("Adding book to database failed " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PatchMapping(value = "/update")
     public ResponseEntity<?> updateBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
                                                    @RequestParam(value = "bookName") String bookName,
@@ -89,6 +74,24 @@ public class BookController {
         }
     }
 
+    @GetMapping(value = "/add")
+    public String addBookByPage(){
+        return "addBook";
+    }
+
+    @PostMapping(value = "/add/v1")
+    public ResponseEntity<?> addBookByParameter(@RequestParam(value = "bookId") @Valid String bookId,
+                                                @RequestParam(value = "bookName") String bookName,
+                                                @RequestParam(value = "genre")  String genre)
+            throws BookAlreadyExistsException {
+        try {
+            bookViewService.saveBookView(new BookView(bookId, bookName, translateGenre(genre)));
+            LOGGER.info("Adding new book success.");
+            return new ResponseEntity<>("Saving new book record success!", HttpStatus.CREATED);
+        } catch (BookViewError e) {
+            return new ResponseEntity<>("Adding book to database failed " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping(value = "/add/v2")
     public ResponseEntity<?> addBookByObject(@RequestBody @Valid BookView bookview) throws BookAlreadyExistsException {
@@ -102,7 +105,7 @@ public class BookController {
         }
     }
 
-    @RequestMapping(value = "/addBookV3", method = RequestMethod.POST)
+    @RequestMapping(value = "/add/v3", method = RequestMethod.POST)
     public String addBook(@RequestBody Book book){
         try{
             bookViewService.saveBookView(new BookView(book.getId(),book.getName(),book.getGenre()));

@@ -25,7 +25,7 @@ public class BookControllerTest extends AbstractTestClass {
 
     @Test
     public void getBookList() throws Exception {
-        String uri = "/books";
+        String uri = "/books/view-all";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
@@ -38,7 +38,7 @@ public class BookControllerTest extends AbstractTestClass {
 
     @Test
     public void shouldAddBookInTheDB() throws Exception {
-        String uri = "/book/add/v1";
+        String uri = "/books/add/v2";
         BookView book = new BookView();
         book.setId("99");
         book.setName("TestBook");
@@ -58,7 +58,7 @@ public class BookControllerTest extends AbstractTestClass {
 
     @Test
     public void shouldGetOneRecordFromDB() throws Exception {
-        String uri ="/book/1";
+        String uri ="/books/search/1";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
