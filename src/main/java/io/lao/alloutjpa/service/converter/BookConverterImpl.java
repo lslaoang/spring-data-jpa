@@ -55,7 +55,7 @@ public class BookConverterImpl implements BookConverter {
     public Book jpaBookToBook(JpaBook jpaBook) {
         try {
             Book book = new Book(jpaBook.getId(), jpaBook.getName(), jpaBook.getGenre());
-            new Book(jpaBook.getId(), jpaBook.getName(), jpaBook.getGenre());
+            LOGGER.info("Converting JpaBook to Book success!");
             return book;
         } catch (RuntimeException e) {
             LOGGER.error("Converting JpaBook to Book failed.");
